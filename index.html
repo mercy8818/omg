@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Trader Love ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            font-family: 'Arial', sans-serif;
+            color: #fff;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.8s ease-in-out;
+        }
+
+        /* Page 1 Styles */
+        #page1 {
+            z-index: 3;
+        }
+
+        .glow-button {
+            padding: 20px 40px;
+            font-size: 24px;
+            background: linear-gradient(45deg, #ff006e, #8338ec);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(131, 56, 236, 0.5);
+            animation: pulse 2s infinite;
+            transition: all 0.3s ease;
+        }
+
+        .glow-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(131, 56, 236, 0.8);
+        }
+
+        /* Page 2 Styles */
+        #page2 {
+            z-index: 2;
+            transform: translateX(100%);
+        }
+
+        .chart-container {
+            width: 600px;
+            height: 400px;
+            position: relative;
+            margin: 20px 0;
+        }
+
+        .message {
+            font-size: 24px;
+            margin-bottom: 30px;
+            text-align: center;
+            animation: glow 2s infinite;
+        }
+
+        /* Page 3 Styles */
+        #page3 {
+            z-index: 1;
+            transform: translateX(100%);
+            padding: 20px;
+        }
+
+        .love-note {
+            max-width: 600px;
+            text-align: center;
+            font-size: 20px;
+            line-height: 1.6;
+            opacity: 0;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ff006e;
+            animation: fall 3s linear infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes glow {
+            0% { text-shadow: 0 0 10px #ff006e; }
+            50% { text-shadow: 0 0 20px #ff006e, 0 0 30px #8338ec; }
+            100% { text-shadow: 0 0 10px #ff006e; }
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100vh) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div id="page1" class="page">
+        <button class="glow-button" onclick="nextPage(1)">Click here baby❤️</button>
+    </div>
+
+    <div id="page2" class="page">
+        <div class="message">📈 I'm so proud of you! Keep going, you've got this, papi! 🚀💖</div>
+        <div class="chart-container" id="heartChart"></div>
+        <button class="glow-button" onclick="nextPage(2)">Next ❤️</button>
+    </div>
+
+    <div id="page3" class="page">
+        <div class="love-note" id="loveLetter"></div>
+        <button class="glow-button" onclick="resetPages()" style="margin-top: 30px;">Back to First Page hon</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        let currentPage = 1;
+        const loveMessage = `“The moment you decide to be different from your environment, you start to break the habit of being yourself.”
+— Breaking the Habit of Being Yourself `;
+
+        function nextPage(pageNum) {
+            const currentPageEl = document.getElementById(`page${pageNum}`);
+            const nextPageEl = document.getElementById(`page${pageNum + 1}`);
+            
+            currentPageEl.style.transform = 'translateX(-100%)';
+            nextPageEl.style.transform = 'translateX(0)';
+            
+            if (pageNum + 1 === 2) {
+                createHeartChart();
+            } else if (pageNum + 1 === 3) {
+                animateText();
+                createConfetti();
+                playHeartbeat();
+            }
+        }
+
+        function resetPages() {
+            for (let i = 1; i <= 3; i++) {
+                const page = document.getElementById(`page${i}`);
+                page.style.transform = i === 1 ? 'translateX(0)' : 'translateX(100%)';
+            }
+        }
+
+        function createHeartChart() {
+            const ctx = document.createElement('canvas');
+            document.querySelector('.chart-container').appendChild(ctx);
+
+            // Generate heart-shaped data
+            const points = 100;
+            const data = Array.from({length: points}, (_, i) => {
+                const t = (i / points) * Math.PI * 2;
+                return {
+                    x: 16 * Math.pow(Math.sin(t), 3),
+                    y: 13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t)
+                };
+            });
+
+            new Chart(ctx, {
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        data: data,
+                        borderColor: ['#22c55e', '#ef4444', '#3b82f6'],
+                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                        pointStyle: 'circle',
+                        pointRadius: 3,
+                        borderWidth: 2,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    animation: {
+                        duration: 2000,
+                        easing: 'easeInOutQuart'
+                    },
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'center',
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        },
+                        y: {
+                            type: 'linear',
+                            position: 'center',
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function animateText() {
+            const letterDiv = document.getElementById('loveLetter');
+            letterDiv.innerHTML = '';
+            let index = 0;
+
+            function addLetter() {
+                if (index < loveMessage.length) {
+                    letterDiv.innerHTML += loveMessage[index];
+                    letterDiv.style.opacity = 1;
+                    index++;
+                    setTimeout(addLetter, 50);
+                }
+            }
+
+            addLetter();
+        }
+
+        function createConfetti() {
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.animationDelay = Math.random() * 3 + 's';
+                confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                document.body.appendChild(confetti);
+            }
+        }
+
+        function playHeartbeat() {
+            const audio = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-heartbeat-drum-701.mp3');
+            audio.loop = true;
+            audio.volume = 0.3;
+            audio.play();
+        }
+    </script>
+</body>
+</html>
